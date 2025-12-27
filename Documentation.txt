@@ -1,0 +1,6 @@
+Since it is a binary resolution, the best way to approach the project is by using random forest as the Model Building
+Random Forest allows you to know which vairables are the ones affecting on the Churn result, also because it is very robust and has a huge capability
+of managing different type of data 
+Random Forest consits on multiple decision trees in which every single one of them will get different data from the same variable, each
+tree giving a decision (Yes/No). After all the trees are done deciding, the decision with the most trees with it will be the decision
+the Model takes as valid.
