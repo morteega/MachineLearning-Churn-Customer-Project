@@ -4,3 +4,7 @@ of managing different type of data
 Random Forest consits on multiple decision trees in which every single one of them will get different data from the same variable, each
 tree giving a decision (Yes/No). After all the trees are done deciding, the decision with the most trees with it will be the decision
 the Model takes as valid.
+
+
+In DataLoader, the method load_data the varaible TotalCharges has to be transformed into numeric because pandas by itself treats it as an object,
+and we manually have to transform it into numeric data
