@@ -8,3 +8,11 @@ the Model takes as valid.
 
 In DataLoader, the method load_data the varaible TotalCharges has to be transformed into numeric because pandas by itself treats it as an object,
 and we manually have to transform it into numeric data
+
+
+In our CSV document we have both categorical and numerical columns, to be able to wokr with this columns with our random forest 
+we need to transform this categorical labels into numerical labels so the trees can make a decision on them. We will use fit.transform 
+which is a translator that decides the label by itself depending on the categorical label
+
+In our data preprocessing we have to eliminate the column Churn from the CSV so that the model doesnt cheat and save it in a vector which we will
+use as reference for the model for it to correct itself or know it´s right.
