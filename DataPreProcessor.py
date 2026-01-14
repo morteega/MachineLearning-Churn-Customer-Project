@@ -7,7 +7,7 @@ class DataPreProcessor:
     def __init__(self):
         self.scaler = StandardScaler()
         self.label_encoders = {}
-        self.categorical_columns = ['Gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
+        self.categorical_columns = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
             'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 
             'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 
             'PaperlessBilling', 'PaymentMethod']
@@ -29,9 +29,15 @@ class DataPreProcessor:
         return self.data
     
     def divide_X_y(self):
-        X=self.data.drop('Churn',axis=1)
+        X=self.data.drop(['Churn','customerID'],axis=1)
         y=self.data['Churn']
         return X,y
+    
+    def scale_numerical(self):
+        scaler=StandardScaler()
+        columns= ['tenure', 'MonthlyCharges', 'TotalCharges']
+        self.data[columns]=scaler.fit_transform(self.data[columns])
+        return self.data
     
     def split_data(self, X,y):
         return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)    
