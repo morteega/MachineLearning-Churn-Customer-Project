@@ -33,14 +33,13 @@ class Evaluator:
         plt.tight_layout()
         plt.show()
        
-   # def plot_feature_importance(self, model, feature_names):
-        #importances = model.feature_importances_
-        #indices = np.argsort(importances) # Ordenamos para que la más importante esté arriba
-        #
-        #plt.figure(figsize=(10, 8))
-        #plt.barh(range(len(indices)), importances[indices], color='skyblue')
-        #plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
-        #plt.title('¿Qué variables influyen más en el Churn?')
-        #plt.xlabel('Importancia Relativa')
-        #plt.show()
+    def plot_feature_importance(self, model, feature_names):
+        importances = model.feature_importances_
+        indices = np.argsort(importances)
+        plt.figure(figsize=(10, 8))
+        plt.barh(range(len(indices)), importances[indices], color='skyblue')
+        plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
+        plt.title('¿Qué variables influyen más en el Churn?')
+        plt.xlabel('Importancia Relativa')
+        plt.show()
         

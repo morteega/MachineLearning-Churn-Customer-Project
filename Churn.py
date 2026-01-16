@@ -21,6 +21,7 @@ def main():
     evaluator = Evaluator(y_test, predictions)
     evaluator.show_metricas()
     evaluator.plot_confusion_matrix()
+    evaluator.plot_feature_importance()
     
     print("End of the Churn Prediction Model Execution")
     
