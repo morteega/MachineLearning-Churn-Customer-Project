@@ -13,18 +13,18 @@ class Evaluator:
         print(classification_report(self.y_test, self.predictions))
         
     def plot_confusion_matrix(self):
-        cm = confusion_matrix(self.y_test, self.predictions)
-        fig, ax = plt.subplots(figsize=(6, 5))
-        im = ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Greens)
+        cm=confusion_matrix(self.y_test, self.predictions)
+        ax=plt.subplots(figsize=(6, 5))
+        im=ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Greens)
         ax.figure.colorbar(im, ax=ax)
-        classes = ['No Churn', 'Churn']
+        classes=['No Churn', 'Churn']
         ax.set(xticks=np.arange(cm.shape[1]),
                yticks=np.arange(cm.shape[0]),
                xticklabels=classes, yticklabels=classes,
                title='Matriz de Confusión',
                ylabel='Valor Real',
                xlabel='Predicción')
-        thresh = cm.max() / 2.
+        thresh=cm.max() / 2.
         for i in range(cm.shape[0]):
             for j in range(cm.shape[1]):
                 ax.text(j, i, format(cm[i, j], 'd'),

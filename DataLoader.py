@@ -18,15 +18,4 @@ class DataLoader:
             return None
             
         
-    def cehck_null_data(self):
-        return self.data.isnull().sum(),self.data.info()
-    
-    def fill_null_data(self):
-        self.data['TotalCharges']=self.data['TotalCharges'].fillna(0)
-        return self.data.isnull().sum()
-    # This function fills the null values in totalcharges column with the median of the column but it should be implemente in DataPreprocessor class
-    # not here.
-    
-    def check_balance(self):
-        return self.data['Churn'].value_counts(normalize=True)
     # This function is just to know how unbalanced the data is

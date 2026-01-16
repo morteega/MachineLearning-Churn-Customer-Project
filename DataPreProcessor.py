@@ -4,8 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 class DataPreProcessor:
-    def __init__(self):
+    def __init__(self,data):
         self.scaler = StandardScaler()
+        self.data = data
         self.label_encoders = {}
         self.categorical_columns = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
             'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 
@@ -25,6 +26,7 @@ class DataPreProcessor:
         return self.data
     
     def numerical_variables_standraization(self):
+        self.fill_null_data()
         self.data[self.numerical_columns]=self.scaler.fit_transform(self.data[self.numerical_columns])
         return self.data
     
@@ -40,4 +42,12 @@ class DataPreProcessor:
         return self.data
     
     def split_data(self, X,y):
-        return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)    
+        return train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)   
+    def check_null_data(self):
+        return self.data.isnull().sum(),self.data.info()
+    
+    def fill_null_data(self):
+        self.data['TotalCharges']=self.data['TotalCharges'].fillna(0)
+
+    def check_balance(self):
+        return self.data['Churn'].value_counts(normalize=True) 
