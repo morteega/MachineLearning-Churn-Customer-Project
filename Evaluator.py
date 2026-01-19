@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from sklearn.metrics import roc_auc_score
 from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
 import numpy as np
 class Evaluator:
@@ -7,6 +8,8 @@ class Evaluator:
         self.predictions = predictions
         
     def show_metricas(self):
+        auc=roc_auc_score(self.y_test, self.predictions)
+        print("AUC-ROC: ", auc*100, "%"+"\n")
         print("Prediction results:"+ "\n\n")
         print("General Accuracy: ", accuracy_score(self.y_test, self.predictions)*100, "%"+"\n")
         print("Classification Report: " + "\n")
@@ -14,7 +17,7 @@ class Evaluator:
         
     def plot_confusion_matrix(self):
         cm=confusion_matrix(self.y_test, self.predictions)
-        ax=plt.subplots(figsize=(6, 5))
+        fig,ax=plt.subplots(figsize=(6, 5))
         im=ax.imshow(cm, interpolation='nearest', cmap=plt.cm.Greens)
         ax.figure.colorbar(im, ax=ax)
         classes=['No Churn', 'Churn']
