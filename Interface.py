@@ -4,42 +4,41 @@ import pandas as pd
 import numpy as np
 
 # 1. Configuración de la página
-st.set_page_config(page_title="Predicción de Fugas", page_icon="🔮")
-
-st.title("🔮 Detector de Fugas de Clientes")
-st.write("Introduce los datos del cliente para saber si tiene riesgo de irse.")
+st.set_page_config(page_title="Churn Prediction", page_icon="🔮")
+st.title("🔮 Client Churn Detector")
+st.write("Introduce the data of the client to give a prediction.")
 
 # 2. Cargamos el modelo y las columnas
 @st.cache_resource # Esto hace que no se recargue todo el rato
-def cargar_modelo():
-    model = joblib.load('churn_model.pkl')
-    columnas = joblib.load('feature_names.pkl')
+def load_model():
+    model=joblib.load('churn_model.pkl')
+    columnas=joblib.load('feature_names.pkl')
     return model, columnas
 
 try:
-    model, columnas = cargar_modelo()
+    model, columnas = load_model()
 except:
-    st.error("⚠️ No se encontraron los archivos .pkl. Ejecuta primero App.py para generar el modelo.")
+    st.error("Model files not found, please run the training script first")
     st.stop()
 
 # 3. Formulario para el usuario (Sidebar)
-st.sidebar.header("Datos del Cliente")
+st.sidebar.header("CLient Data")
 
 def user_input_features():
     # --- VARIABLES NUMÉRICAS ---
-    tenure = st.sidebar.slider('Meses de Permanencia (Tenure)', 0, 72, 12)
-    monthly_charges = st.sidebar.number_input('Cargos Mensuales ($)', min_value=0.0, value=50.0)
-    total_charges = st.sidebar.number_input('Cargos Totales ($)', min_value=0.0, value=500.0)
+    tenure = st.sidebar.slider('Months of Stay (Tenure)', 0, 72, 12)
+    monthly_charges = st.sidebar.number_input('Monthly Charges', min_value=0.0, value=50.0)
+    total_charges = st.sidebar.number_input('Total Charges', min_value=0.0, value=500.0)
     
     # --- VARIABLES CATEGÓRICAS (Las más importantes) ---
     # Nota: Aquí simulamos la conversión manual para simplificar
     # En un entorno real, usaríamos el mismo encoder, pero para este demo esto funciona perfecto.
     
-    contract = st.sidebar.selectbox('Tipo de Contrato', ['Month-to-month', 'One year', 'Two year'])
-    tech_support = st.sidebar.selectbox('¿Tiene Soporte Técnico?', ['No', 'Yes', 'No internet service'])
-    online_security = st.sidebar.selectbox('¿Tiene Seguridad Online?', ['No', 'Yes', 'No internet service'])
-    payment_method = st.sidebar.selectbox('Método de Pago', ['Electronic check', 'Mailed check', 'Bank transfer', 'Credit card'])
-    internet_service = st.sidebar.selectbox('Servicio de Internet', ['DSL', 'Fiber optic', 'No'])
+    contract = st.sidebar.selectbox('Type fo Contract', ['Month-to-month', 'One year', 'Two year'])
+    tech_support = st.sidebar.selectbox('Technical Support?', ['No', 'Yes', 'No internet service'])
+    online_security = st.sidebar.selectbox('Online Security?', ['No', 'Yes', 'No internet service'])
+    payment_method = st.sidebar.selectbox('Payment Method', ['Electronic check', 'Mailed check', 'Bank transfer', 'Credit card'])
+    internet_service = st.sidebar.selectbox('Internet Service', ['DSL', 'Fiber optic', 'No'])
     
     # Creamos un diccionario con TODAS las columnas que espera el modelo
     # Inicializamos todo a 0 por defecto
@@ -92,8 +91,8 @@ if st.button('🚀 Calcular Riesgo de Churn'):
     st.divider()
     
     if churn_risk > 0.5:
-        st.error(f"🚨 ALERTA: ¡Alto riesgo de fuga! ({churn_risk*100:.2f}%)")
-        st.write("Se recomienda ofrecer un descuento o llamar al cliente.")
+        st.error(f"Risk of churn ({churn_risk*100:.2f}%)")
+        st.write("Client is likely to leave. Consider retention strategies.")
     else:
-        st.success(f"✅ Cliente Seguro ({churn_risk*100:.2f}% de riesgo)")
-        st.write("El cliente parece estar contento.")
+        st.success(f"Safe Client ({churn_risk*100:.2f}% of risk)")
+        st.write("Client seems to be happy.")
