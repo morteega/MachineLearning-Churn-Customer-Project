@@ -1,4 +1,4 @@
-from Churn import Churn
+from Project.Churn import Churn
 
 def main():
     churn_model = Churn()
