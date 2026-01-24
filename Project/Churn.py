@@ -1,8 +1,8 @@
-from Project.DataLoader import DataLoader
+from DataLoader import DataLoader
 import joblib
-from Project.DataPreProcessor import DataPreProcessor
-from Project.ChurnModeler import ChurnModeler
-from Project.Evaluator import Evaluator
+from DataPreProcessor import DataPreProcessor
+from ChurnModeler import ChurnModeler
+from Evaluator import Evaluator
 class Churn:
       def __init__(self):
             pass
