@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import numpy as np
 
 st.set_page_config(page_title="Churn Prediction", layout="wide")
 st.title("Client Churn Detector")
@@ -78,8 +77,37 @@ def user_input_features():
     return features
 
 input_df=user_input_features()
+backmapdata=input_df.copy()
+def backmap(backmapdata):
+    reverse_binary_map={0:'No',1:'Yes'}
+    reverse_trinary_map={0:'No',1:'Yes',2:'No internet service'}
+    reverse_internet_service={0:'DSL',1:'Fiber optic',2:'No'}
+    reverse_contract={0:'Month-to-month',1:'One year',2:'Two year'}
+    reverse_payment_method={0:'Electronic check',1:'Mailed check',2:'Bank transfer',3:'Credit card'}
+    backmapdata['gender'] = backmapdata['gender'].map({0: 'Female', 1: 'Male'})
+    backmapdata['SeniorCitizen'] = backmapdata['SeniorCitizen'].map({0: 'No', 1: 'Yes'})
+    backmapdata['Partner'] = backmapdata['Partner'].map(reverse_binary_map)
+    backmapdata['Dependents'] = backmapdata['Dependents'].map(reverse_binary_map)
+    backmapdata['TechSupport'] = backmapdata['TechSupport'].map(reverse_trinary_map)
+    backmapdata['OnlineSecurity'] = backmapdata['OnlineSecurity'].map(reverse_trinary_map)
+    backmapdata['OnlineBackup'] = backmapdata['OnlineBackup'].map(reverse_trinary_map)
+    backmapdata['DeviceProtection'] = backmapdata['DeviceProtection'].map(reverse_trinary_map)
+    backmapdata['StreamingTV'] = backmapdata['StreamingTV'].map(reverse_trinary_map)
+    backmapdata['StreamingMovies'] = backmapdata['StreamingMovies'].map(reverse_trinary_map)
+    backmapdata['InternetService'] = backmapdata['InternetService'].map(reverse_internet_service)
+    backmapdata['PhoneService'] = backmapdata['PhoneService'].map(reverse_binary_map)
+    backmapdata['Contract'] = backmapdata['Contract'].map(reverse_contract)
+    backmapdata['PaperlessBilling'] = backmapdata['PaperlessBilling'].map(reverse_binary_map)
+    backmapdata['PaymentMethod'] = backmapdata['PaymentMethod'].map(reverse_payment_method)
+    backmapdata['MultipleLines'] = backmapdata['MultipleLines'].map({
+        0: 'No',
+        1: 'Yes',
+        2: 'No phone service'
+    })
+    return backmapdata
+backmapdata=backmap(backmapdata)
 st.subheader('Summary of the Client')
-st.dataframe(input_df, use_container_width=True) 
+st.dataframe(backmapdata, use_container_width=True) 
 if st.button('Calculate Churn Risk'):
     prediction=model.predict(input_df)
     probability=model.predict_proba(input_df)

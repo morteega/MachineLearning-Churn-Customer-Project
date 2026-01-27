@@ -17,5 +17,3 @@ class DataLoader:
             print("File is empty.")
             return None
             
-        
-    # This function is just to know how unbalanced the data is

@@ -5,9 +5,9 @@ from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 class DataPreProcessor:
     def __init__(self,data):
-        self.scaler = StandardScaler()
-        self.data = data
-        self.label_encoders = {}
+        self.scaler=StandardScaler()
+        self.data=data
+        self.label_encoders={}
         self.categorical_columns = ['gender', 'Partner', 'Dependents', 'PhoneService', 'MultipleLines', 
             'InternetService', 'OnlineSecurity', 'OnlineBackup', 'DeviceProtection', 
             'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract', 
@@ -16,9 +16,9 @@ class DataPreProcessor:
         
     def encode_categorical(self):
         for col in self.categorical_columns:
-            le = LabelEncoder()
-            self.data[col] = le.fit_transform(self.data[col])
-            self.label_encoders[col] = le
+            le=LabelEncoder()
+            self.data[col]=le.fit_transform(self.data[col])
+            self.label_encoders[col]=le
         return self.data
     
     def target_transformation(self):

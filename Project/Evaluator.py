@@ -4,7 +4,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 import numpy as np
 class Evaluator:
     def __init__(self, y_test, predictions):
-        self.y_test = y_test
+        self.y_test=y_test
         self.predictions = predictions
         
     def show_metricas(self):
@@ -37,8 +37,8 @@ class Evaluator:
         plt.show()
        
     def plot_feature_importance(self, model, feature_names):
-        importances = model.feature_importances_
-        indices = np.argsort(importances)
+        importances=model.feature_importances_
+        indices=np.argsort(importances)
         plt.figure(figsize=(10, 8))
         plt.barh(range(len(indices)), importances[indices], color='skyblue')
         plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
