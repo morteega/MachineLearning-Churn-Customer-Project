@@ -9,11 +9,11 @@ class Evaluator:
         
     def show_metricas(self):
         auc=roc_auc_score(self.y_test, self.predictions)
-        print("AUC-ROC: ", auc*100, "%"+"\n")
         print("Prediction results:"+ "\n\n")
         print("General Accuracy: ", accuracy_score(self.y_test, self.predictions)*100, "%"+"\n")
         print("Classification Report: " + "\n")
         print(classification_report(self.y_test, self.predictions))
+        print("AUC: ", auc*100, "%"+" \n")
         
     def plot_confusion_matrix(self):
         cm=confusion_matrix(self.y_test, self.predictions)
@@ -24,9 +24,9 @@ class Evaluator:
         ax.set(xticks=np.arange(cm.shape[1]),
                yticks=np.arange(cm.shape[0]),
                xticklabels=classes, yticklabels=classes,
-               title='Matriz de Confusión',
-               ylabel='Valor Real',
-               xlabel='Predicción')
+               title='Confussion Matrix',
+               ylabel='RealValue',
+               xlabel='Prediction')
         thresh=cm.max() / 2.
         for i in range(cm.shape[0]):
             for j in range(cm.shape[1]):
@@ -42,7 +42,7 @@ class Evaluator:
         plt.figure(figsize=(10, 8))
         plt.barh(range(len(indices)), importances[indices], color='skyblue')
         plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
-        plt.title('¿Qué variables influyen más en el Churn?')
-        plt.xlabel('Importancia Relativa')
+        plt.title('Which variables have the most effect on the model?')
+        plt.xlabel('Relative Importance')
         plt.show()
         
